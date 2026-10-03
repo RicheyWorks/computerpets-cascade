@@ -1,36 +1,40 @@
 # Cascade
 
-**Pet Puzzle Quest** — Match-3 battler that charges overlay pet abilities in real time.
+**Match colors. Charge your pet's abilities.**
 
-Part of [ComputerPets](https://github.com/RicheyWorks/computerpets). Map: [computerpets-ecosystem](https://github.com/RicheyWorks/computerpets-ecosystem).
+A planned match-3 battler where board colors map to the active pet's kit, with accessible palettes and training encounters.
 
-| | |
+**Stage: design scaffold.** This checkout contains a design document and a source placeholder. The experience below is planned; there is no runnable app or integrated service yet.
+
+[Status](#status) · [Planned experience](#planned-experience) · [Contributor quickstart](#contributor-quickstart) · [Game design](docs/DESIGN.md) · [Ecosystem map](https://github.com/RicheyWorks/computerpets-ecosystem)
+
+## Status
+
+| Available today | What you can inspect |
 | --- | --- |
-| Status | Design scaffold — loop and engine frozen |
-| License | MIT |
-| Tokens | Minigames never mint or burn. Tired overlay, not a dead lineage. |
-| First pet | [Meet Rui first](https://github.com/RicheyWorks/computerpets/blob/main/docs/START-HERE.md). This game is optional. |
+| [Game design](docs/DESIGN.md) | Intended behavior, boundaries, and planned dependencies. |
+| [Source placeholder](src/index.ts) | Name metadata only; no package.json, app, or runtime is checked in. |
+| [MIT license](LICENSE) | Licensing terms for the repository. |
 
-## The loop
+Gameplay, endpoints, integration arrows, and failure handling on this page describe implementation targets. No build/test harness, CI workflow, or product screenshots are included in this scaffold.
 
-Matches are not just score. Red cluster = Rui swipe. Blue = Reed hop. The pet on the side of the board is yours, vitals-aware.
+## Planned experience
 
-## Who plays
+- Pick pet. Board colors map to its kit.
+- Match to fill bars, tap to fire.
+- Enemy is a training dummy or weekly boss.
+- Win = treat + XP into Dojo, not a new mint.
 
-Puzzle players. Colors map to the active pet kit.
-
-## What it is not
-
-A hidden pay-board. Colorblind palettes are required, not optional.
-
-## Genre and engine
+### Planned technology
 
 - Genre: **Match-3 RPG**
 - Engine: **Phaser.js**
 - Stack: TypeScript · Phaser 3 · match-3 board · real-time ability charge into a pet duel
 - Default surface: `8080`
 
-## Architecture
+### Planned connections
+
+These arrows show intended dependencies, rather than working integrations.
 
 ```mermaid
 flowchart LR
@@ -39,71 +43,47 @@ flowchart LR
   gambit -.->|ability names| cascade
 ```
 
-## How you play
+## Contributor quickstart
 
-1. Pick pet. Board colors map to its kit.
-2. Match to fill bars, tap to fire.
-3. Enemy is a training dummy or weekly boss.
-4. Win = treat + XP into Dojo, not a new mint.
+With access to this private repository, Git and PowerShell are enough to review the scaffold:
 
-## First slice
+```powershell
+git clone https://github.com/RicheyWorks/computerpets-cascade.git
+Set-Location computerpets-cascade
+Get-Content docs/DESIGN.md
+Get-Content src/index.ts
+```
 
-Build this and stop.
+Read [Game design](docs/DESIGN.md) before choosing implementation details. The commands above inspect the checked-in files; app installation, editor launch, and server startup become possible after a buildable project and entry point are added.
+
+### First implementation target
 
 **8x8 board, Rui swipe on red clusters, dummy enemy, XP into Dojo.**
 
 You know it works when: Input debounce. Tab-out pauses vs dummy. Colorblind palette ships in v1.
 
-## Environment
+Treat this as an acceptance target for a future implementation. Start with the documented slice, add the required project setup and focused tests, and update these instructions with commands that work from a fresh clone.
 
-Node 22
+## Design boundaries
 
-## Failure doctrine
+1. Minigames cannot mint or burn NFTs by themselves (Minter is the write path).
+2. Stats come from lived overlay care + Dojo caps, not cash shop.
+3. Species kits stay inside Lore. Illegal hybrids never spawn.
+4. Fail soft: the desktop overlay process is not this process.
+
+**Required failure behavior:**
 
 Mis-tap spam → input debounce. Tab-out pauses vs dummy, disconnect vs boss. Colorblind palettes required.
 
-Canon rules that never yield:
+## Ecosystem
 
-- 210 living kinds. No illegal hybrids.
-- Overlay pets can get tired, sick, or hide. Tokens are not burned by a minigame.
-- Desktop walk stays the main quest. Closing Cascade must leave Rui walking.
+- [computerpets](https://github.com/RicheyWorks/computerpets) (active pet)
+- [computerpets-quests](https://github.com/RicheyWorks/computerpets-quests)
+- [computerpets-gambit](https://github.com/RicheyWorks/computerpets-gambit) (ability names)
+- [computerpets-telemetry](https://github.com/RicheyWorks/computerpets-telemetry)
 
-## Neighbors
-
-- computerpets (active pet)
-- computerpets-quests
-- computerpets-gambit (ability names)
-- computerpets-telemetry
-
-## Layout
-
-```
-computerpets-cascade/
-  README.md
-  LICENSE
-  docs/DESIGN.md
-  src/                implementation lands here
-```
-
-## Run (Windows)
-
-```powershell
-cd app; npm install; npm run dev
-```
-
-Meet Rui first via the [flagship start-here](https://github.com/RicheyWorks/computerpets/blob/main/docs/START-HERE.md). This game is optional.
-
-## Links
-
-- Flagship: [RicheyWorks/computerpets](https://github.com/RicheyWorks/computerpets)
-- This repo: [RicheyWorks/computerpets-cascade](https://github.com/RicheyWorks/computerpets-cascade)
-- Map: [RicheyWorks/computerpets-ecosystem](https://github.com/RicheyWorks/computerpets-ecosystem)
-- Design file: [docs/DESIGN.md](docs/DESIGN.md)
+Start with the [ComputerPets flagship](https://github.com/RicheyWorks/computerpets) for the desktop pet. This repository describes an optional extension; the [ecosystem map](https://github.com/RicheyWorks/computerpets-ecosystem) explains the broader plan.
 
 ## License
 
 MIT. See [LICENSE](LICENSE).
-
----
-
-*Two hundred ten living kinds. Keep them so a line does not go quiet.*
